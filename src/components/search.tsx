@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 
 export default function Search({ className }: { className?: string }) {
   return (
-    <div className={cn("flex", className)}>
-      <Image src={Icon} width={20} height={20} alt="Search Icon" className="relative -right-0.5" />
+    <div className={cn("flex items-center", className)}>
+      <Image src={Icon} alt="Search Icon" preload className="relative -right-0.5 w-5 h-5 aspect-square" />
       <Input
         className="-ml-6 w-full px-8"
         placeholder="Search for people,tags,folders,spacesand Looms"
