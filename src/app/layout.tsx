@@ -1,10 +1,9 @@
+import MainNav from "@/components/MainNav";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "../assets/globals.css";
-import MainNav from "@/components/MainNav";
 
 const geistSans = Roboto({
-  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
@@ -20,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} antialiased`}>
+      <body className={`${geistSans.className} antialiased`}>
         <MainNav />
         {children}
       </body>
