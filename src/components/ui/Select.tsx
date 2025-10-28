@@ -48,7 +48,7 @@ function SelectTrigger({
       <SelectPrimitive.Icon asChild>
         <Image
           src={ArrowDownIcon}
-          className="size-5"
+          className="size-4 ml-1.5 sm:size-5"
           alt="Arrow Down Icon"
         />
       </SelectPrimitive.Icon>
