@@ -38,6 +38,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           height={100}
           src={video.thumbnail}
           alt={video.title}
+          priority
           className="h-full w-full rounded-t-2xl object-cover"
         />
 
@@ -74,6 +75,7 @@ export default function VideoCard({ video }: VideoCardProps) {
                 alt="Arrow Down"
                 width={15}
                 height={15}
+                className="w-[15px] h-[15px]"
               />
             </p>
           </div>
