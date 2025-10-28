@@ -88,7 +88,7 @@ const videos: VideoCardProps[] = [
 
 export default function VideoList() {
   return (
-    <div className="mt-10 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
+    <div className="sm:mt-10 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-8">
       {videos.map((video) => (
         <VideoCard key={video.id} video={video} />
       ))}
