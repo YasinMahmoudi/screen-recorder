@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import ArrowDownIcon from "../../assets/icons/arrow-down.svg";
-import CheckIcon from "../../assets/icons/checkmark.svg";
+import CheckIcon from "../../assets/icons/check.svg";
 
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -48,7 +48,7 @@ function SelectTrigger({
       <SelectPrimitive.Icon asChild>
         <Image
           src={ArrowDownIcon}
-          className="size-4 opacity-50"
+          className="size-5"
           alt="Arrow Down Icon"
         />
       </SelectPrimitive.Icon>
