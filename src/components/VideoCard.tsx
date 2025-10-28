@@ -46,7 +46,9 @@ export default function VideoCard({ video }: VideoCardProps) {
           {video.duration} min{" "}
         </span>
 
-
+        <VideoCardActions>
+          <CopyLinkButton id={video.id} />
+        </VideoCardActions>
       </div>
 
       <div className="flex justify-between px-3 py-4">
@@ -113,4 +115,48 @@ function VideoCardActions({ children }: { children: React.ReactNode }) {
   return <div className="absolute top-4 right-2.5">{children}</div>;
 }
 
+function CopyLinkButton({ id }: { id: string }) {
+  const [isCopied, setIsCopied] = React.useState(false);
 
+  function handleCopyLink(e: React.MouseEvent) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    navigator.clipboard.writeText(`${window.location.origin}/video/${id}`);
+
+    setIsCopied(true);
+
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
+  }
+
+  return (
+    <>
+      <Activity mode={isCopied ? "hidden" : "visible"}>
+        <Button
+          onClick={handleCopyLink}
+          className="h-6 w-6 cursor-pointer rounded-full bg-white p-[3px] hover:bg-white/90"
+          size="icon"
+        >
+          <Image src={LinkIcon} alt="Link Icon" width={18} height={18} />
+        </Button>
+      </Activity>
+
+      <Activity mode={isCopied ? "visible" : "hidden"}>
+        <div className="flex h-6 items-center space-x-0.5 rounded-2xl bg-white px-2 py-[3px]">
+          <Image
+            src={CopyIcon}
+            alt="Link Icon"
+            width={18}
+            height={18}
+            className="inline-block"
+          />
+          <span className="text-xs font-normal tracking-tighter">
+            Link copied to clipboard
+          </span>
+        </div>
+      </Activity>
+    </>
+  );
+}
