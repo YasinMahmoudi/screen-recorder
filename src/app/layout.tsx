@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${geistSans.className} antialiased max-w-[1440px] mx-auto`}>
         <MainNav />
         {children}
       </body>
