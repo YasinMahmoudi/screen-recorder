@@ -26,7 +26,7 @@ export type VideoCardProps = {
 
 export default function VideoCard({ video }: { video: VideoCardProps }) {
   return (
-    <div className="aspect-square w-2xs rounded-2xl border border-gray-300">
+    <div className="w-full aspect-video rounded-2xl border border-gray-300 pb-6">
       <div className="relative h-40">
         <Image
           width={100}
