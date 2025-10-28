@@ -10,26 +10,21 @@ import Link from "next/link";
 import Button from "@/components/ui/Button";
 import React, { Activity } from "react";
 
-export interface VideoCardProps {
-  video: {
-    id: string;
-    title: string;
-    description?: string;
-    thumbnail: string;
-    videoUrl?: string;
-    createdAt: string;
-    author: {
-      name: string;
-      image: string;
-    };
-    views: number;
-    likes: number;
-    comments: number;
-    duration: number;
+export type VideoCardProps = {
+  id: string;
+  title: string;
+  description?: string;
+  thumbnail: string;
+  createdAt: string;
+  author: {
+    name: string;
+    image: string;
   };
-}
+  views: number;
+  duration: number;
+};
 
-export default function VideoCard({ video }: VideoCardProps) {
+export default function VideoCard({ video }: { video: VideoCardProps }) {
   return (
     <div className="aspect-square w-2xs rounded-2xl border border-gray-300">
       <div className="relative h-40">
@@ -75,7 +70,7 @@ export default function VideoCard({ video }: VideoCardProps) {
                 alt="Arrow Down"
                 width={15}
                 height={15}
-                className="w-[15px] h-[15px]"
+                className="h-[15px] w-[15px]"
               />
             </p>
           </div>
@@ -92,7 +87,7 @@ export default function VideoCard({ video }: VideoCardProps) {
   );
 }
 
-function VideoCardTitle({ video }: VideoCardProps) {
+function VideoCardTitle({ video }: {video:VideoCardProps}) {
   const title = `${video.title} ${String.fromCharCode(8212)} ${new Intl.DateTimeFormat(
     "en-US",
     {
