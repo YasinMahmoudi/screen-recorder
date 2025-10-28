@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import ArrowDownIcon from "../assets/icons/arrow-down.svg";
 import EyeIcon from "../assets/icons/eye.svg";
@@ -6,6 +8,7 @@ import CopyIcon from "../assets/icons/copy.svg";
 
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import React, { Activity } from "react";
 
 export interface VideoCardProps {
   video: {
@@ -43,7 +46,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           {video.duration} min{" "}
         </span>
 
-        <VideoCardActions />
+
       </div>
 
       <div className="flex justify-between px-3 py-4">
@@ -106,12 +109,8 @@ function VideoCardTitle({ video }: VideoCardProps) {
   );
 }
 
-function VideoCardActions() {
-  return (
-    <div className="absolute top-4 right-2.5">
-      <Button className="bg-white hover:bg-white/90 rounded-full w-6 h-6 cursor-pointer p-[3px]" size='icon'>
-        <Image src={LinkIcon} alt="Link Icon" width={18} height={18} />
-      </Button>
-    </div>
-  );
+function VideoCardActions({ children }: { children: React.ReactNode }) {
+  return <div className="absolute top-4 right-2.5">{children}</div>;
 }
+
+
