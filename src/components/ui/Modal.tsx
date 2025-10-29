@@ -9,7 +9,7 @@ import React, {
   JSX,
   ReactNode,
   useContext,
-  useState
+  useState,
 } from "react";
 import { createPortal } from "react-dom";
 import Button from "./Button";
@@ -62,14 +62,14 @@ function ModalContent({
 }) {
   const { openModalId, setOpenModalId } = useModal();
 
-  const ref = useOutSideClick(setOpenModalId);
-
   if (openModalId !== openId) return null;
 
   return createPortal(
-    <div className="fixed top-0 left-0 grid h-full w-full place-items-center bg-gray-950/30">
+    <div
+      onClick={() => setOpenModalId(null)}
+      className="fixed top-0 left-0 grid h-full w-full place-items-center bg-gray-950/30"
+    >
       <motion.div
-        ref={ref}
         initial={{ scale: 0.9 }}
         animate={{ scale: 1, transition: { duration: 0.1 } }}
         className="relative min-h-48 w-[min(90%,480px)] rounded-lg bg-white p-6 shadow"
