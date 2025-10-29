@@ -56,20 +56,22 @@ function ModalTrigger({
 function ModalContent({
   children,
   openId,
+  autoClose = false,
 }: {
   children: ReactNode;
   openId: string;
+  autoClose: boolean;
 }) {
   const { openModalId, setOpenModalId } = useModal();
+
+  const ref = useOutSideClick(() => setOpenModalId(null));
 
   if (openModalId !== openId) return null;
 
   return createPortal(
-    <div
-      onClick={() => setOpenModalId(null)}
-      className="fixed top-0 left-0 grid h-full w-full place-items-center bg-gray-950/30"
-    >
+    <div className="fixed top-0 left-0 grid h-full w-full place-items-center bg-gray-950/30">
       <motion.div
+        ref={autoClose ? ref : null}
         initial={{ scale: 0.9 }}
         animate={{ scale: 1, transition: { duration: 0.1 } }}
         className="relative min-h-48 w-[min(90%,480px)] rounded-lg bg-white p-6 shadow"
