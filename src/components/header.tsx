@@ -5,11 +5,14 @@ import SortingSelect from "@/components/SortingSelect";
 export default function Header({ className }: { className?: string }) {
   return (
     <div
-      className={cn("my-4 flex items-center justify-between py-2 gap-2", className)}
+      className={cn(
+        "my-4 flex items-center justify-between gap-2 py-2",
+        className,
+      )}
     >
       <Search className="flex-2 sm:w-sm sm:flex-initial" />
 
-      <SortingSelect triggerClassName="flex-[.75] sm:w-[180px] sm:flex-initial " />
+      <SortingSelect />
     </div>
   );
 }
