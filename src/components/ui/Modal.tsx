@@ -60,7 +60,7 @@ function ModalContent({
 }: {
   children: ReactNode;
   openId: string;
-  autoClose: boolean;
+  autoClose?: boolean;
 }) {
   const { openModalId, setOpenModalId } = useModal();
 
