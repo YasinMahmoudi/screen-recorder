@@ -1,7 +1,9 @@
+"use client"
+
 import Button from "@/components/ui/Button";
 import Image from "next/image";
 import UploadIcon from "../assets/icons/upload.svg";
-import Recordicon from "../assets/icons/record.svg";
+import RecordModal from "@/components/RecordModal";
 
 interface TopHeaderProps {
   imageSrc?: string;
@@ -48,10 +50,7 @@ export default function TopHeader({
           <span className="hidden sm:block">Upload a video</span>
         </Button>
 
-        <Button className="h-10 w-10 cursor-pointer rounded-full bg-violet-600 text-pink-50 hover:bg-violet-500 sm:h-auto sm:w-auto">
-          <Image src={Recordicon} alt="Video Icon" />
-          <span className="hidden sm:block">Record a video</span>
-        </Button>
+        <RecordModal/>
       </div>
     </div>
   );
