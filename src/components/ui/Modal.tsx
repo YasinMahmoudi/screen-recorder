@@ -1,20 +1,18 @@
 "use client";
 
+import { useOutSideClick } from "@/hooks/useOutSideClick";
+import { motion } from "motion/react";
 import React, {
   cloneElement,
   createContext,
   isValidElement,
   JSX,
-  PropsWithChildren,
-  ReactElement,
   ReactNode,
   useContext,
-  useState,
+  useState
 } from "react";
-import Button from "./Button";
-import { motion } from "motion/react";
 import { createPortal } from "react-dom";
-import { useOutSideClick } from "@/hooks/useOutSideClick";
+import Button from "./Button";
 
 interface ModalContextProps {
   openModalId: string | null;
