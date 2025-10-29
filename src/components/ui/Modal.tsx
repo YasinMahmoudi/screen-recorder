@@ -69,7 +69,7 @@ function ModalContent({
   if (openModalId !== openId) return null;
 
   return createPortal(
-    <div className="fixed top-0 left-0 grid h-full w-full place-items-center bg-gray-950/30">
+    <div className="fixed top-0 left-0 grid h-full w-full place-items-center bg-gray-950/50 backdrop-blur-[2px]">
       <motion.div
         ref={autoClose ? ref : null}
         initial={{ scale: 0.9 }}
