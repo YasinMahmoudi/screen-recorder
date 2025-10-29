@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
 import Button from "@/components/ui/Button";
-import ArrowRightIcon from "../../assets/icons/arrow-right.svg";
-import ArrowLeftIcon from "../../assets/icons/arrow-left.svg";
 import Image from "next/image";
+import React from "react";
+import ArrowLeftIcon from "../../assets/icons/arrow-left.svg";
+import ArrowRightIcon from "../../assets/icons/arrow-right.svg";
 
 interface PaginationProps {
   currentPage?: number;
@@ -16,8 +15,8 @@ export default function Pagination({
   totalPages = 5,
   currentPage = 1,
 }: PaginationProps) {
-  const [activePage, setActivePage] = React.useState<number>(
-    Number(currentPage),
+  const [activePage, setActivePage] = React.useState<number | string>(
+    currentPage,
   );
 
   const pagesArray = Array.from({ length: totalPages }).map((_, index) => {
@@ -26,6 +25,7 @@ export default function Pagination({
 
   const startPage = 1;
   const endPage = totalPages;
+  const numericActivePage = activePage as number;
 
   let pages: (number | string)[] = [];
 
@@ -37,19 +37,23 @@ export default function Pagination({
     pages = [...pagesArray.splice(0, 5), "...", endPage];
   }
 
-  if (totalPages > 5 && activePage >= 5 && activePage < endPage - 2) {
+  if (
+    totalPages > 5 &&
+    numericActivePage >= 5 &&
+    numericActivePage < endPage - 2
+  ) {
     pages = [
       startPage,
       "...",
-      activePage - 1,
-      activePage,
-      activePage + 1,
+      numericActivePage - 1,
+      numericActivePage,
+      numericActivePage + 1,
       "...",
       endPage,
     ];
   }
 
-  if (totalPages > 5 && activePage >= endPage - 2) {
+  if (totalPages > 5 && numericActivePage >= endPage - 2) {
     pages = [
       startPage,
       startPage + 1,
@@ -65,8 +69,7 @@ export default function Pagination({
     <div className="flex items-center">
       <PreviousPageElement
         setActivePage={setActivePage}
-        totalPages={totalPages}
-        disabled={activePage === 1}
+        disabled={numericActivePage === 1}
       />
 
       <ul className="flex gap-1.5">
@@ -74,7 +77,7 @@ export default function Pagination({
           <PaginationItem
             key={index}
             page={page}
-            activePage={activePage}
+            activePage={numericActivePage}
             onSetActivePage={setActivePage}
           />
         ))}
@@ -100,11 +103,20 @@ function PaginationItem({
 }) {
   const isActivePage = activePage === page;
 
+  if (typeof page === "string" && page === "...")
+    return (
+      <li>
+        <Button size="icon" className={`cursor-not-allowed rounded-full`}>
+          ...
+        </Button>
+      </li>
+    );
+
   return (
     <li onClick={() => onSetActivePage(page)}>
       <Button
         size="icon"
-        className={`size-6 cursor-pointer rounded-full text-xs hover:bg-gray-100 hover:text-gray-900 sm:size-9 ${isActivePage ? "bg-violet-500 text-violet-50 hover:bg-violet-500 hover:text-violet-50" : ""}`}
+        className={`size-6 cursor-pointer rounded-full text-xs select-none hover:bg-gray-100 hover:text-gray-900 sm:size-9 ${isActivePage ? "bg-violet-500 text-violet-50 hover:bg-violet-500 hover:text-violet-50" : ""}`}
       >
         {page}
       </Button>
@@ -124,7 +136,7 @@ function NextPageElement({
   return (
     <Button
       size="icon"
-      className="size-6 rounded-full hover:bg-gray-100 sm:size-9"
+      className="size-6 rounded-full select-none hover:bg-gray-100 sm:size-9"
       disabled={disabled}
       onClick={() =>
         setActivePage((activePage) => {
@@ -147,7 +159,7 @@ function PreviousPageElement({
   return (
     <Button
       size="icon"
-      className="size-6 rounded-full hover:bg-gray-100 sm:size-9"
+      className="size-6 rounded-full select-none hover:bg-gray-100 sm:size-9"
       disabled={disabled}
       onClick={() =>
         setActivePage((activePage) => {
