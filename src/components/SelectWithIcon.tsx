@@ -20,12 +20,14 @@ interface SelectItemType {
 }
 
 interface SelectProps {
+  selectLabel?: string;
   triggerClassName?: string;
   iconSrc?: string;
   items: SelectItemType[];
 }
 
 export default function SelectWithIcon({
+  selectLabel='Select on option',
   triggerClassName,
   iconSrc,
   items,
@@ -49,7 +51,7 @@ export default function SelectWithIcon({
         <div className="flex items-center gap-1">
           {iconSrc && <Image src={iconSrc} alt="Icon Button" />}
 
-          <SelectValue placeholder="Sort By" />
+          <SelectValue placeholder={selectLabel} />
         </div>
       </SelectTrigger>
       <SelectContent className="border-gray-300 bg-white">
