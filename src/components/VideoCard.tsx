@@ -3,12 +3,10 @@
 import Image from "next/image";
 import ArrowDownIcon from "../assets/icons/arrow-down.svg";
 import EyeIcon from "../assets/icons/eye.svg";
-import LinkIcon from "../assets/icons/link.svg";
-import CopyIcon from "../assets/icons/copy.svg";
 
 import Link from "next/link";
-import Button from "@/components/ui/Button";
-import React, { Activity } from "react";
+import React from "react";
+import CopyLinkButton from "@/components/CopyLinkButton";
 
 export type VideoCardProps = {
   id: string;
@@ -26,7 +24,7 @@ export type VideoCardProps = {
 
 export default function VideoCard({ video }: { video: VideoCardProps }) {
   return (
-    <div className="w-full aspect-video rounded-2xl border border-gray-300 pb-6">
+    <div className="aspect-video w-full rounded-2xl border border-gray-300 pb-6">
       <div className="relative h-40">
         <Image
           width={100}
@@ -87,7 +85,7 @@ export default function VideoCard({ video }: { video: VideoCardProps }) {
   );
 }
 
-function VideoCardTitle({ video }: {video:VideoCardProps}) {
+function VideoCardTitle({ video }: { video: VideoCardProps }) {
   const title = `${video.title} ${String.fromCharCode(8212)} ${new Intl.DateTimeFormat(
     "en-US",
     {
@@ -112,48 +110,3 @@ function VideoCardActions({ children }: { children: React.ReactNode }) {
   return <div className="absolute top-4 right-2.5">{children}</div>;
 }
 
-function CopyLinkButton({ id }: { id: string }) {
-  const [isCopied, setIsCopied] = React.useState(false);
-
-  function handleCopyLink(e: React.MouseEvent) {
-    e.stopPropagation();
-    e.preventDefault();
-
-    navigator.clipboard.writeText(`${window.location.origin}/video/${id}`);
-
-    setIsCopied(true);
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 3000);
-  }
-
-  return (
-    <>
-      <Activity mode={isCopied ? "hidden" : "visible"}>
-        <Button
-          onClick={handleCopyLink}
-          className="h-6 w-6 cursor-pointer rounded-full bg-white p-[3px] hover:bg-white/90"
-          size="icon"
-        >
-          <Image src={LinkIcon} alt="Link Icon" width={18} height={18} />
-        </Button>
-      </Activity>
-
-      <Activity mode={isCopied ? "visible" : "hidden"}>
-        <div className="flex h-6 items-center space-x-0.5 rounded-2xl bg-white px-2 py-[3px]">
-          <Image
-            src={CopyIcon}
-            alt="Link Icon"
-            width={18}
-            height={18}
-            className="inline-block"
-          />
-          <span className="text-xs font-normal tracking-tighter">
-            Link copied to clipboard
-          </span>
-        </div>
-      </Activity>
-    </>
-  );
-}
