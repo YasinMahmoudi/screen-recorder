@@ -1,3 +1,5 @@
+"use client"
+
 import React, { Activity } from "react";
 import Button from "@/components/ui/Button";
 import Image from "next/image";
