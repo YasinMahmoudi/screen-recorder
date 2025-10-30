@@ -2,12 +2,14 @@
 
 import { cn } from "@/lib/utils";
 import React, {
-    type ComponentPropsWithRef,
-    type ReactNode,
-    useContext,
-    useState,
+  type ComponentPropsWithRef,
+  type ReactNode,
+  useContext,
+  useState,
 } from "react";
 import Button from "@/components/ui/Button";
+
+import { motion } from "motion/react";
 
 interface TabsContextTypes {
   activeTab: string | null | undefined;
@@ -85,6 +87,14 @@ export function TabsContent({
   const isActiveTab = activeTab === contentKey;
 
   return (
-    isActiveTab && <div className={cn("rounded-sm px-4 py-2", className)}>{children}</div>
+    isActiveTab && (
+      <motion.div
+        className={cn("rounded-sm px-4 py-2", className)}
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
+      >
+        {children}
+      </motion.div>
+    )
   );
 }
