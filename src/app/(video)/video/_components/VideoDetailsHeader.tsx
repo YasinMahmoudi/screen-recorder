@@ -1,3 +1,5 @@
+"use client";
+
 import CopyLinkButton from "@/components/CopyLinkButton";
 import SelectWithIcon from "@/components/SelectWithIcon";
 import Button from "@/components/ui/Button";
@@ -5,12 +7,13 @@ import Divider from "@/components/ui/Divider";
 import Image from "next/image";
 import React from "react";
 import EyeIcon from "@/assets/icons/eye.svg";
+import Modal from "@/components/ui/Modal";
 
 export default function VideoDetailsHeader() {
   return (
     <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div className="space-y-1.5">
-        <h1 className="xs:text-lg text-base line-clamp-1 font-bold sm:text-xl md:text-2xl lg:text-3xl">
+        <h1 className="xs:text-lg line-clamp-1 text-base font-bold sm:text-xl md:text-2xl lg:text-3xl">
           Team Update - Sprint Planning Meeting
         </h1>
         <div className="flex items-center gap-2">
@@ -38,7 +41,7 @@ export default function VideoDetailsHeader() {
         <CopyLinkButton id={"12"} />
 
         <div className="flex items-center gap-2 md:gap-4">
-          <DeleteVideoButton />
+          <DeleteVideoModal />
           <Divider mode="vertical" />
           <VisibilitySelect />
         </div>
@@ -47,11 +50,34 @@ export default function VideoDetailsHeader() {
   );
 }
 
-function DeleteVideoButton() {
+function DeleteVideoModal() {
   return (
-    <Button className="cursor-pointer rounded-full border border-gray-200 bg-white text-rose-500 hover:bg-rose-500 hover:text-rose-50 text-xs sm:text-sm px-2.5 sm:px-4 ">
-      Delete video
-    </Button>
+    <Modal>
+      <Modal.Trigger openId="delete-video">
+        <Button className="cursor-pointer rounded-full border border-gray-200 bg-white px-2.5 text-xs text-rose-500 hover:bg-rose-500 hover:text-rose-50 sm:px-4 sm:text-sm">
+          Delete video
+        </Button>
+      </Modal.Trigger>
+
+      <Modal.Content openId="delete-video">
+        <h4 className="text-lg font-semibold tracking-[-.8px]">
+          {" "}
+          Are you sure delete this video ?{" "}
+        </h4>
+        <p className="mt-1 text-sm font-normal tracking-[-.8px] text-gray-600">
+          {" "}
+          By deleting this video , it&apos;s competly removed from your profile
+          and our database and this action can not be undo ! .{" "}
+        </p>
+
+        <div className="mt-4 flex justify-end gap-4">
+          <Button className="cursor-pointer hover:bg-gray-200 text-gray-900">Cancle</Button>
+          <Button className="cursor-pointer bg-rose-500 text-rose-50 hover:bg-rose-400">
+            Delete
+          </Button>
+        </div>
+      </Modal.Content>
+    </Modal>
   );
 }
 
