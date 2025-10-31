@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.className} mx-auto max-w-[1440px] antialiased min-h-dvh`}
+        className={`${geistSans.className} mx-auto max-w-[1440px] antialiased min-h-dvh grid`}
       >
         {children}
       </body>
