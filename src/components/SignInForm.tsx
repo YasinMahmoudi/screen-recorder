@@ -14,7 +14,13 @@ export default function SignInForm() {
       </p>
 
       <Button className="mt-6 w-full cursor-pointer rounded-full border border-gray-200 bg-white">
-        <Image src={GoogleIcon} alt="Google Icon" width={15} height={15} />
+        <Image
+          src={GoogleIcon}
+          alt="Google Icon"
+          width={30}
+          height={30}
+          className="h-5 w-5"
+        />
 
         <span> Sign in with Google </span>
       </Button>
