@@ -1,7 +1,6 @@
-import MainNav from "@/components/MainNav";
+import "@/assets/globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import "@/assets/globals.css";
 
 const geistSans = Roboto({
   subsets: ["latin"],
