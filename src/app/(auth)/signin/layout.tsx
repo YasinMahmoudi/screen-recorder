@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.className} mx-auto grid min-h-dvh max-w-[1440px] antialiased`}
+        className={`${geistSans.className} mx-auto grid min-h-dvh max-w-[1800px] antialiased`}
       >
         <AuthHeader />
         {children}
