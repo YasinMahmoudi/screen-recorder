@@ -1,13 +1,12 @@
 "use client";
 
+import EyeIcon from "@/assets/icons/eye.svg";
 import CopyLinkButton from "@/components/CopyLinkButton";
 import SelectWithIcon from "@/components/SelectWithIcon";
 import Button from "@/components/ui/Button";
 import Divider from "@/components/ui/Divider";
-import Image from "next/image";
-import React from "react";
-import EyeIcon from "@/assets/icons/eye.svg";
 import Modal from "@/components/ui/Modal";
+import Image from "next/image";
 
 export default function VideoDetailsHeader() {
   return (
@@ -22,7 +21,7 @@ export default function VideoDetailsHeader() {
             alt="Avatar"
             width={24}
             height={24}
-            className="rounded-full"
+            className="rounded-full w-6 h-6"
           />
           <span className="text-xs tracking-[-.4px] text-gray-400 sm:text-sm">
             {" "}
