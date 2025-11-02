@@ -1,9 +1,11 @@
+"use client";
+
 import Button from "@/components/ui/Button";
 import GoogleIcon from "@/assets/icons/google.svg";
 import Image from "next/image";
 import Logo from "./Logo";
 
-export default function SignInForm() {
+export default function SignInForm({ onSignIn }: { onSignIn: () => void }) {
   return (
     <div className="clip-path grid place-items-center">
       <div className="mx-auto max-w-sm rounded-2xl border border-gray-200 bg-white px-6 py-8 text-center shadow">
@@ -20,7 +22,10 @@ export default function SignInForm() {
           Start creating and sharing your first video in a minute
         </p>
 
-        <Button className="mt-6 w-full cursor-pointer rounded-full border border-gray-200 bg-white">
+        <Button
+          onClick={onSignIn}
+          className="mt-6 w-full cursor-pointer rounded-full border border-gray-200 bg-white"
+        >
           <Image
             src={GoogleIcon}
             alt="Google Icon"
