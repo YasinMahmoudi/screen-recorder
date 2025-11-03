@@ -24,13 +24,15 @@ interface SelectProps {
   triggerClassName?: string;
   iconSrc?: string;
   items: SelectItemType[];
+  id?:string
 }
 
 export default function SelectWithIcon({
-  selectLabel='Select on option',
+  selectLabel = "Select on option",
   triggerClassName,
   iconSrc,
   items,
+  id
 }: SelectProps) {
   const [selected, setSelected] = React.useState<string | undefined>(undefined);
 
@@ -43,6 +45,7 @@ export default function SelectWithIcon({
   return (
     <Select defaultValue={selected} onValueChange={handleChange}>
       <SelectTrigger
+        id={id}
         className={cn(
           "w-[180px] rounded-full border-gray-300 py-2.5 text-xs ring-offset-2 focus-visible:ring-gray-100 sm:text-sm",
           triggerClassName,
