@@ -1,4 +1,6 @@
+import { videos } from "@/drizzle/schema";
 import { ClassValue, clsx } from "clsx";
+import { ilike, sql } from "drizzle-orm";
 import { twMerge } from "tailwind-merge";
 
 interface ApiFetchOptions {
@@ -83,3 +85,24 @@ export const withErrorHandling = <T, A extends unknown[]>(
     }
   };
 };
+
+export const getOrderByClause = (filter?: string) => {
+  switch (filter) {
+    case "Most Viewed":
+      return sql`${videos.views} DESC`;
+    case "Least Viewed":
+      return sql`${videos.views} ASC`;
+    case "Oldest First":
+      return sql`${videos.createdAt} ASC`;
+    case "Most Recent":
+    default:
+      return sql`${videos.createdAt} DESC`;
+  }
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const doesTitleMatch = (videos: any, searchQuery: string) =>
+  ilike(
+    sql`REPLACE(REPLACE(REPLACE(LOWER(${videos.title}), '-', ''), '.', ''), ' ', '')`,
+    `%${searchQuery.replace(/[-. ]/g, "").toLowerCase()}%`,
+  );
