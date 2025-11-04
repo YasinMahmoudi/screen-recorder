@@ -17,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { uploadFileToBunny } from "@/lib/uploadFileToBunny";
+import Spinner from "@/components/Spinner";
 
 const uploadSchema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -51,7 +52,11 @@ export default function Page() {
   const video = useFileInput(500 * 1024 * 1024);
   const thumbnail = useFileInput(10 * 1024 * 1024);
 
-  const { handleSubmit, control } = useForm<FormValuesType>({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<FormValuesType>({
     resolver: yupResolver(uploadSchema) as unknown as Resolver<FormValuesType>,
     defaultValues,
   });
@@ -192,8 +197,11 @@ export default function Page() {
             )}
           />
 
-          <Button className="h-10! w-full cursor-pointer rounded-full bg-violet-500 text-violet-50">
-            Uplaod video
+          <Button
+            className="h-10! w-full cursor-pointer rounded-full bg-violet-500 text-violet-50"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <Spinner /> : "Uplaod video"}
           </Button>
         </div>
       </form>
