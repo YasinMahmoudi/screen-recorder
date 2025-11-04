@@ -122,7 +122,7 @@ function SelectItem({
     >
       <span className="absolute right-2 flex size-3.5 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <Image src={CheckIcon} className="size-4" alt="Check Icon" />
+          <Image src={CheckIcon} width={32} height={32} className="size-4" alt="Check Icon" />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
