@@ -15,6 +15,32 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function differenceDate(date: Date): string {
+  const input = new Date(date);
+  const now = new Date();
+
+  const timeDiffrence = now.getTime() - input.getTime();
+
+  const daysDifference = Math.floor(timeDiffrence / (1000 * 60 * 60 * 24));
+
+  if (daysDifference === 0) return "Today";
+  if (daysDifference === 1) return "Yesterday";
+  if (daysDifference <= 7) return `${daysDifference} days ago`;
+  if (daysDifference <= 30) return `${Math.ceil(daysDifference / 7)} weeks ago`;
+  if (daysDifference <= 365) {
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+    }).format(input);
+  }
+
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(input);
+}
+
 export const getEnv = (key: string): string => {
   const value = process.env[key];
   if (!value) throw new Error(`Missing required env: ${key}`);
