@@ -122,8 +122,8 @@ function VisibilitySelect({
       value={selectedVisibility}
       items={[
         {
-          label: "Publice",
-          value: "publice",
+          label: "Public",
+          value: "public",
         },
         {
           label: "Private",

@@ -174,3 +174,7 @@ export const getAllVideos = withErrorHandling(
     };
   },
 );
+
+export const getVideo = withErrorHandling(async (videoId: string) => {
+  return (await buildVideoWithUserQuery().where(eq(videos.id, videoId))).at(0);
+});
