@@ -6,43 +6,70 @@ import SelectWithIcon from "@/components/SelectWithIcon";
 import Button from "@/components/ui/Button";
 import Divider from "@/components/ui/Divider";
 import Modal from "@/components/ui/Modal";
+import { differenceDate } from "@/lib/utils";
 import Image from "next/image";
 
-export default function VideoDetailsHeader() {
+type VideoDetailsHeaderProps = {
+  id: string;
+  title: string;
+  visibility: "public" | "private";
+  description?: string;
+  thambnail?: string;
+  createdAt: Date;
+  user: {
+    id: string;
+    name: string;
+    image: string | null;
+  } | null;
+};
+
+export default function VideoDetailsHeader({
+  id,
+  title,
+  visibility,
+  user,
+  createdAt,
+}: VideoDetailsHeaderProps) {
+  const uploadDatePassed = differenceDate(createdAt);
+
   return (
     <div className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
       <div className="space-y-1.5">
         <h1 className="xs:text-lg line-clamp-1 text-base font-bold sm:text-xl md:text-2xl lg:text-3xl">
-          Team Update - Sprint Planning Meeting
+          {title}
         </h1>
         <div className="flex items-center gap-2">
-          <Image
-            src="/images/avatar.jpg"
-            alt="Avatar"
-            width={24}
-            height={24}
-            className="rounded-full w-6 h-6"
-          />
-          <span className="text-xs tracking-[-.4px] text-gray-400 sm:text-sm">
-            {" "}
-            Yasin Mahmoudi{" "}
-          </span>
+          {user && (
+            <>
+              <Image
+                src={user.image!}
+                alt={`User Avatar ${user.name}`}
+                width={24}
+                height={24}
+                className="h-6 w-6 rounded-full"
+              />
+              <span className="text-xs tracking-[-.4px] text-gray-400 sm:text-sm">
+                {" "}
+                {user.name}{" "}
+              </span>
+            </>
+          )}
 
           <div className="h-1 w-1 rounded-full bg-gray-500"></div>
           <span className="text-xs tracking-[-.4px] text-gray-400 sm:text-sm">
             {" "}
-            3 days ago
+            {uploadDatePassed}
           </span>
         </div>
       </div>
 
       <div className="mt-4 flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-stretch md:mt-0 md:gap-4">
-        <CopyLinkButton id={"12"} />
+        <CopyLinkButton id={id} />
 
         <div className="flex items-center gap-2 md:gap-4">
           <DeleteVideoModal />
           <Divider mode="vertical" />
-          <VisibilitySelect />
+          <VisibilitySelect selectedVisibility={visibility} />
         </div>
       </div>
     </div>
@@ -70,7 +97,9 @@ function DeleteVideoModal() {
         </p>
 
         <div className="mt-4 flex justify-end gap-4">
-          <Button className="cursor-pointer hover:bg-gray-200 text-gray-900">Cancle</Button>
+          <Button className="cursor-pointer text-gray-900 hover:bg-gray-200">
+            Cancle
+          </Button>
           <Button className="cursor-pointer bg-rose-500 text-rose-50 hover:bg-rose-400">
             Delete
           </Button>
@@ -80,12 +109,17 @@ function DeleteVideoModal() {
   );
 }
 
-function VisibilitySelect() {
+function VisibilitySelect({
+  selectedVisibility,
+}: {
+  selectedVisibility?: "public" | "private";
+}) {
   return (
     <SelectWithIcon
       triggerClassName="w-auto sm:w-[180px]"
       iconSrc={EyeIcon}
       selectLabel="Manage Visibility"
+      value={selectedVisibility}
       items={[
         {
           label: "Publice",
