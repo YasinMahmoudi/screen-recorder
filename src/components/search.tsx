@@ -1,9 +1,36 @@
+"use client";
+
 import Input from "@/components/ui/Input";
 import Icon from "../assets/icons/search.svg";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import React from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Search({ className }: { className?: string }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  function handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      const searchQuery = e.currentTarget.value;
+
+      const params = new URLSearchParams(searchParams);
+
+      if (!searchQuery) {
+        params.delete("search");
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+        return;
+      }
+
+      params.set("search", searchQuery);
+
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }
+  }
+
   return (
     <div className={cn("flex h-10 items-center", className)}>
       <Image
@@ -16,6 +43,7 @@ export default function Search({ className }: { className?: string }) {
       <Input
         className="-ml-6 w-full py-2 pl-8"
         placeholder="Search to find a video "
+        onKeyDown={handleSearch}
       />
     </div>
   );
