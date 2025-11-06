@@ -11,6 +11,7 @@ import React from "react";
 export type VideoCardProps = {
   video: {
     id: string;
+    videoId: string;
     title: string;
     description?: string;
     thumbnailUrl: string;
@@ -52,7 +53,7 @@ export default function VideoCard({
         )}
 
         <VideoCardActions>
-          <CopyLinkButton id={video.id} />
+          <CopyLinkButton id={video.videoId} />
         </VideoCardActions>
       </div>
 
@@ -97,7 +98,7 @@ export default function VideoCard({
       </div>
 
       <VideoCardTitle
-        id={video.id}
+        videoId={video.videoId}
         title={video.title}
         date={video.createdAt}
       />
@@ -108,11 +109,11 @@ export default function VideoCard({
 function VideoCardTitle({
   title,
   date,
-  id,
+  videoId,
 }: {
   title: string;
   date: Date;
-  id: string;
+  videoId: string;
 }) {
   const videoTitle = `${title} ${String.fromCharCode(8212)} ${new Intl.DateTimeFormat(
     "en-US",
@@ -129,7 +130,7 @@ function VideoCardTitle({
       className="mr-2 ml-3.5 line-clamp-2 font-semibold tracking-[-0.8px] text-gray-900 hover:text-gray-700"
       title={videoTitle}
     >
-      <Link href={`/video/${id}`}>{videoTitle}</Link>
+      <Link href={`/video/${videoId}`}>{videoTitle}</Link>
     </h1>
   );
 }
