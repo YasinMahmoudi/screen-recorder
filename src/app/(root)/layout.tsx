@@ -1,7 +1,8 @@
+import "@/assets/globals.css";
 import MainNav from "@/components/MainNav";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import "@/assets/globals.css";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Roboto({
   subsets: ["latin"],
@@ -24,6 +25,10 @@ export default function RootLayout({
       >
         <MainNav />
         {children}
+
+        <div>
+          <Toaster />
+        </div>
       </body>
     </html>
   );
