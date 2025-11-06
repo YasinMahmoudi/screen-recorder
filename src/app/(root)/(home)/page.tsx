@@ -30,7 +30,7 @@ export default async function Home({ searchParams }: SearchParams) {
 
       {pagination.totalVideos > pagination.pageSize && (
         <>
-          <Divider className="mt-8 mb-4" />
+          <Divider className="mt-8 mb-4 border-gray-200" />
           <div className="flex justify-center p-2">
             <Pagination
               currentPage={pagination.currentPage}
