@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@arcjet/inspect": "1.0.0-beta.14",
+    "@arcjet/ip": "1.0.0-beta.14",
     "@arcjet/next": "1.0.0-beta.14",
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.2",
