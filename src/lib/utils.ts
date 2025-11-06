@@ -114,13 +114,13 @@ export const withErrorHandling = <T, A extends unknown[]>(
 
 export const getOrderByClause = (filter?: string) => {
   switch (filter) {
-    case "Most Viewed":
+    case "most-viewed":
       return sql`${videos.views} DESC`;
-    case "Least Viewed":
+    case "oldest-first":
       return sql`${videos.views} ASC`;
-    case "Oldest First":
+    case "least-viewed":
       return sql`${videos.createdAt} ASC`;
-    case "Most Recent":
+    case "moset-recent":
     default:
       return sql`${videos.createdAt} DESC`;
   }
