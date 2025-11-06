@@ -36,7 +36,6 @@ interface VideoDetails {
   duration?: number | null;
 }
 
-
 interface BunnyVideoResponse {
   guid: string;
   status: number;
@@ -186,12 +185,11 @@ export const getVideo = withErrorHandling(async (videoId: string) => {
   return (await buildVideoWithUserQuery().where(eq(videos.id, videoId))).at(0);
 });
 
-
 export const getVideoProcessingStatus = withErrorHandling(
   async (videoId: string) => {
     const processingInfo = await apiFetch<BunnyVideoResponse>(
       `${VIDEO_STREAM_BASE_URL}/${BUNNY_LIBRARY_ID}/videos/${videoId}`,
-      { bunnyType: "stream" }
+      { bunnyType: "stream" },
     );
 
     return {
@@ -199,5 +197,18 @@ export const getVideoProcessingStatus = withErrorHandling(
       encodingProgress: processingInfo.encodeProgress || 0,
       status: processingInfo.status,
     };
-  }
+  },
+);
+
+export const incrementVideoViews = withErrorHandling(
+  async (videoId: string) => {
+    await db
+      .update(videos)
+      .set({ views: sql`${videos.views} + 1`, updatedAt: new Date() })
+      .where(eq(videos.videoId, videoId));
+
+    revalidatePath(`/video/${videoId}`);
+
+    return {};
+  },
 );

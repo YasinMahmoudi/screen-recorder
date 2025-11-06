@@ -1,11 +1,12 @@
 "use client";
 
 import Spinner from "@/components/Spinner";
-import { getVideoProcessingStatus } from "@/lib/actions/video";
+import { getVideoProcessingStatus, incrementVideoViews } from "@/lib/actions/video";
 import { useEffect, useRef, useState } from "react";
 
 const initialVideoState = {
   isLoaded: false,
+  hasIncrementedView: false,
   isProcessing: true,
 };
 
@@ -37,6 +38,21 @@ export default function VideoPalyer({ videoId }: { videoId: string }) {
       clearInterval(intervalId);
     };
   }, [videoId]);
+
+  useEffect(() => {
+    if (state.isLoaded && !state.hasIncrementedView && !state.isProcessing) {
+      const incrementView = async () => {
+        try {
+          await incrementVideoViews(videoId);
+          setState((prev) => ({ ...prev, hasIncrementedView: true }));
+        } catch (error) {
+          console.error("Failed to increment view count:", error);
+        }
+      };
+
+      incrementView();
+    }
+  }, [videoId, state.isLoaded, state.hasIncrementedView, state.isProcessing]);
 
   return (
     <div className="aspect-video w-full rounded-xl brightness-50">
