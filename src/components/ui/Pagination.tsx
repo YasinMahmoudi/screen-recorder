@@ -21,7 +21,7 @@ export default function Pagination({
   const pathname = usePathname();
 
   const [activePage, setActivePage] = React.useState<number | string>(
-    currentPage,
+    searchParams.get("page") || currentPage,
   );
 
   const pagesArray = Array.from({ length: totalPages }).map((_, index) => {
@@ -121,7 +121,7 @@ function PaginationItem({
   onSetActivePage: React.Dispatch<React.SetStateAction<number | string>>;
   onChangePage: (page: number) => void;
 }) {
-  const isActivePage = activePage === page;
+  const isActivePage = Number(activePage) === Number(page);
 
   if (typeof page === "string" && page === "...")
     return (
