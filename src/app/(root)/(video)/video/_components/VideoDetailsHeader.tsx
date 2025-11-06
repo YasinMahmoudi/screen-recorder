@@ -7,11 +7,12 @@ import Spinner from "@/components/Spinner";
 import Button from "@/components/ui/Button";
 import Divider from "@/components/ui/Divider";
 import Modal from "@/components/ui/Modal";
-import { deleteVideo } from "@/lib/actions/video";
+import { deleteVideo, updateVideoVisibility } from "@/lib/actions/video";
 import { differenceDate } from "@/lib/utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import toast from "react-hot-toast";
 
 type VideoDetailsHeaderProps = {
   id: string;
@@ -76,7 +77,7 @@ export default function VideoDetailsHeader({
         <div className="flex items-center gap-2 md:gap-4">
           <DeleteVideoModal deleteId={videoId} thambnailUrl={thambnail!} />
           <Divider mode="vertical" />
-          <VisibilitySelect selectedVisibility={visibility} />
+          <VisibilitySelect videoId={videoId} selectedVisibility={visibility} />
         </div>
       </div>
     </div>
@@ -143,15 +144,26 @@ function DeleteVideoModal({
 
 function VisibilitySelect({
   selectedVisibility,
+  videoId,
 }: {
   selectedVisibility?: "public" | "private";
+  videoId: string;
 }) {
+  async function handleUpdateVisibility(visibility: "public" | "private") {
+    await updateVideoVisibility(videoId, visibility);
+
+    toast.success("Visibility updated successfully");
+  }
+
   return (
     <SelectWithIcon
       triggerClassName="w-auto sm:w-[180px]"
       iconSrc={EyeIcon}
       selectLabel="Manage Visibility"
       value={selectedVisibility}
+      onChange={(value: unknown) =>
+        handleUpdateVisibility(value as unknown as "public" | "private")
+      }
       items={[
         {
           label: "Public",

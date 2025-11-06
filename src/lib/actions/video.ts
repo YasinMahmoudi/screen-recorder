@@ -248,7 +248,23 @@ export const deleteVideo = withErrorHandling(
     await db.delete(videos).where(eq(videos.videoId, videoId));
 
     revalidatePath("/");
-    
+
+    revalidatePath(`/video/${videoId}`);
+
+    return {};
+  },
+);
+
+export const updateVideoVisibility = withErrorHandling(
+  async (videoId: string, visibility: Visibility) => {
+    await validateWithArcjet(videoId);
+    await db
+      .update(videos)
+      .set({ visibility, updatedAt: new Date() })
+      .where(eq(videos.videoId, videoId));
+
+    revalidatePath("/");
+
     revalidatePath(`/video/${videoId}`);
 
     return {};
