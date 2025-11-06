@@ -201,7 +201,7 @@ export const getAllVideos = withErrorHandling(
 );
 
 export const getVideo = withErrorHandling(async (videoId: string) => {
-  return (await buildVideoWithUserQuery().where(eq(videos.id, videoId))).at(0);
+  return (await buildVideoWithUserQuery().where(eq(videos.videoId, videoId))).at(0);
 });
 
 export const getVideoProcessingStatus = withErrorHandling(
