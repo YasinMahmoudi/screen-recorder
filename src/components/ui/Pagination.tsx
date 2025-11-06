@@ -5,6 +5,7 @@ import Image from "next/image";
 import React from "react";
 import ArrowLeftIcon from "../../assets/icons/arrow-left.svg";
 import ArrowRightIcon from "../../assets/icons/arrow-right.svg";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationProps {
   currentPage?: number;
@@ -15,6 +16,10 @@ export default function Pagination({
   totalPages = 5,
   currentPage = 1,
 }: PaginationProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [activePage, setActivePage] = React.useState<number | string>(
     currentPage,
   );
@@ -65,11 +70,21 @@ export default function Pagination({
     ];
   }
 
+  function handleChangePage(page: number) {
+    const params = new URLSearchParams(searchParams);
+
+    params.set("page", String(page));
+
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+
   return (
     <div className="flex items-center">
       <PreviousPageElement
         setActivePage={setActivePage}
+        onChangePage={handleChangePage}
         disabled={numericActivePage === 1}
+        page={currentPage === 1 ? 1 : currentPage - 1}
       />
 
       <ul className="flex gap-1.5">
@@ -79,6 +94,7 @@ export default function Pagination({
             page={page}
             activePage={numericActivePage}
             onSetActivePage={setActivePage}
+            onChangePage={handleChangePage}
           />
         ))}
       </ul>
@@ -87,6 +103,8 @@ export default function Pagination({
         setActivePage={setActivePage}
         totalPages={totalPages}
         disabled={activePage === endPage}
+        onChangePage={handleChangePage}
+        page={currentPage + 1}
       />
     </div>
   );
@@ -96,10 +114,12 @@ function PaginationItem({
   page,
   activePage,
   onSetActivePage,
+  onChangePage,
 }: {
   page: number | string;
   activePage: number;
   onSetActivePage: React.Dispatch<React.SetStateAction<number | string>>;
+  onChangePage: (page: number) => void;
 }) {
   const isActivePage = activePage === page;
 
@@ -113,7 +133,12 @@ function PaginationItem({
     );
 
   return (
-    <li onClick={() => onSetActivePage(page)}>
+    <li
+      onClick={() => {
+        onSetActivePage(page);
+        onChangePage(page as number);
+      }}
+    >
       <Button
         size="icon"
         className={`size-6 cursor-pointer rounded-full text-xs select-none hover:bg-gray-100 hover:text-gray-900 sm:size-9 ${isActivePage ? "bg-violet-500 text-violet-50 hover:bg-violet-500 hover:text-violet-50" : ""}`}
@@ -128,21 +153,26 @@ function NextPageElement({
   setActivePage,
   totalPages,
   disabled,
+  page,
+  onChangePage,
 }: {
   setActivePage: React.Dispatch<React.SetStateAction<number | string>>;
   totalPages: number;
   disabled: boolean;
+  page: number | string;
+  onChangePage: (page: number) => void;
 }) {
   return (
     <Button
       size="icon"
       className="size-6 rounded-full select-none hover:bg-gray-100 sm:size-9"
       disabled={disabled}
-      onClick={() =>
+      onClick={() => {
         setActivePage((activePage) => {
           return +activePage < totalPages ? +activePage + 1 : activePage;
-        })
-      }
+        });
+        onChangePage(page as number);
+      }}
     >
       <Image src={ArrowRightIcon} alt="Next Page" width={15} height={15} />
     </Button>
@@ -152,20 +182,26 @@ function NextPageElement({
 function PreviousPageElement({
   setActivePage,
   disabled,
+  page,
+  onChangePage,
 }: {
   setActivePage: React.Dispatch<React.SetStateAction<number | string>>;
   disabled: boolean;
+  page: number | string;
+  onChangePage: (page: number) => void;
 }) {
   return (
     <Button
       size="icon"
       className="size-6 rounded-full select-none hover:bg-gray-100 sm:size-9"
       disabled={disabled}
-      onClick={() =>
+      onClick={() => {
         setActivePage((activePage) => {
           return +activePage > 1 ? +activePage - 1 : activePage;
-        })
-      }
+        });
+
+        onChangePage(page as number);
+      }}
     >
       <Image src={ArrowLeftIcon} alt="Prev Page" width={15} height={15} />
     </Button>
