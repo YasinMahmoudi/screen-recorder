@@ -14,6 +14,7 @@ import {
 import { and, eq, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import aj, { fixedWindow, request } from "@/lib/arcjet";
 
 const VIDEO_STREAM_BASE_URL = BUNNY.STREAM_BASE_URL;
 const THUMBNAIL_STORAGE_BASE_URL = BUNNY.STORAGE_BASE_URL;
@@ -51,6 +52,22 @@ async function getSessionId(): Promise<string> {
 
   return session.user.id;
 }
+
+const validateWithArcjet = async (fingerPrint: string) => {
+  const rateLimit = aj.withRule(
+    fixedWindow({
+      mode: "LIVE",
+      window: "1m",
+      max: 2,
+      characteristics: ["fingerprint"],
+    }),
+  );
+  const req = await request();
+  const decision = await rateLimit.protect(req, { fingerprint: fingerPrint });
+  if (decision.isDenied()) {
+    throw new Error("Rate Limit Exceeded");
+  }
+};
 
 const buildVideoWithUserQuery = () =>
   db
@@ -102,6 +119,8 @@ export const getThumbnailUploadUrl = withErrorHandling(
 export const saveVideoDetails = withErrorHandling(
   async (videoDetails: VideoDetails) => {
     const userId = await getSessionId();
+
+    await validateWithArcjet(userId);
 
     await apiFetch(
       `${VIDEO_STREAM_BASE_URL}/${BUNNY_LIBRARY_ID}/videos/${videoDetails.videoId}`,
