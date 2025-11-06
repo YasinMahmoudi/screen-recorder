@@ -12,6 +12,10 @@ export default function Search({ className }: { className?: string }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  const searchQuery = searchParams.get("search")
+    ? searchParams.get("search")
+    : "";
+
   function handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
       const searchQuery = e.currentTarget.value;
@@ -26,6 +30,7 @@ export default function Search({ className }: { className?: string }) {
       }
 
       params.set("search", searchQuery);
+      params.set('page', '1');
 
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
@@ -44,6 +49,7 @@ export default function Search({ className }: { className?: string }) {
         className="-ml-6 w-full py-2 pl-8"
         placeholder="Search to find a video "
         onKeyDown={handleSearch}
+        defaultValue={searchQuery as string}
       />
     </div>
   );
