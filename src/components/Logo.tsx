@@ -10,6 +10,7 @@ export default function Logo({ className = "" }: { className?: string }) {
         alt="Logo Image"
         width={2000}
         height={2000}
+        loading="eager"
         className={cn("h-12 w-12", className)}
       />
     </Link>
