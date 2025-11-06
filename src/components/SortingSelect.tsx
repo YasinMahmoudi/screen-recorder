@@ -33,6 +33,7 @@ export default function SortingSelect() {
     const params = new URLSearchParams(searchParams);
 
     params.set("filter", filter);
+    params.set("page", "1");
 
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
