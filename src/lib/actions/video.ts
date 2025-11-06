@@ -36,6 +36,13 @@ interface VideoDetails {
   duration?: number | null;
 }
 
+
+interface BunnyVideoResponse {
+  guid: string;
+  status: number;
+  encodeProgress?: number;
+}
+
 async function getSessionId(): Promise<string> {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -178,3 +185,19 @@ export const getAllVideos = withErrorHandling(
 export const getVideo = withErrorHandling(async (videoId: string) => {
   return (await buildVideoWithUserQuery().where(eq(videos.id, videoId))).at(0);
 });
+
+
+export const getVideoProcessingStatus = withErrorHandling(
+  async (videoId: string) => {
+    const processingInfo = await apiFetch<BunnyVideoResponse>(
+      `${VIDEO_STREAM_BASE_URL}/${BUNNY_LIBRARY_ID}/videos/${videoId}`,
+      { bunnyType: "stream" }
+    );
+
+    return {
+      isProcessed: processingInfo.status === 4,
+      encodingProgress: processingInfo.encodeProgress || 0,
+      status: processingInfo.status,
+    };
+  }
+);
