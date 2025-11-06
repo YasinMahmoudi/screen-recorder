@@ -2,7 +2,7 @@
 
 import Button from "@/components/ui/Button";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import ArrowLeftIcon from "../../assets/icons/arrow-left.svg";
 import ArrowRightIcon from "../../assets/icons/arrow-right.svg";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -70,6 +70,14 @@ export default function Pagination({
     ];
   }
 
+  useEffect(() => {
+    function handleActivePage() {
+      setActivePage(searchParams.get("page") || currentPage);
+    }
+
+    handleActivePage();
+  }, [currentPage, searchParams]);
+
   function handleChangePage(page: number) {
     const params = new URLSearchParams(searchParams);
 
@@ -84,7 +92,7 @@ export default function Pagination({
         setActivePage={setActivePage}
         onChangePage={handleChangePage}
         disabled={numericActivePage === 1}
-        page={currentPage === 1 ? 1 : currentPage - 1}
+        page={currentPage}
       />
 
       <ul className="flex gap-1.5">
@@ -104,7 +112,7 @@ export default function Pagination({
         totalPages={totalPages}
         disabled={activePage === endPage}
         onChangePage={handleChangePage}
-        page={currentPage + 1}
+        page={currentPage}
       />
     </div>
   );
