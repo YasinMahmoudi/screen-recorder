@@ -3,14 +3,19 @@
 import EyeIcon from "@/assets/icons/eye.svg";
 import CopyLinkButton from "@/components/CopyLinkButton";
 import SelectWithIcon from "@/components/SelectWithIcon";
+import Spinner from "@/components/Spinner";
 import Button from "@/components/ui/Button";
 import Divider from "@/components/ui/Divider";
 import Modal from "@/components/ui/Modal";
+import { deleteVideo } from "@/lib/actions/video";
 import { differenceDate } from "@/lib/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 type VideoDetailsHeaderProps = {
   id: string;
+  videoId: string;
   title: string;
   visibility: "public" | "private";
   description?: string;
@@ -29,6 +34,8 @@ export default function VideoDetailsHeader({
   visibility,
   user,
   createdAt,
+  videoId,
+  thambnail,
 }: VideoDetailsHeaderProps) {
   const uploadDatePassed = differenceDate(createdAt);
 
@@ -67,7 +74,7 @@ export default function VideoDetailsHeader({
         <CopyLinkButton id={id} />
 
         <div className="flex items-center gap-2 md:gap-4">
-          <DeleteVideoModal />
+          <DeleteVideoModal deleteId={videoId} thambnailUrl={thambnail!} />
           <Divider mode="vertical" />
           <VisibilitySelect selectedVisibility={visibility} />
         </div>
@@ -76,7 +83,28 @@ export default function VideoDetailsHeader({
   );
 }
 
-function DeleteVideoModal() {
+function DeleteVideoModal({
+  deleteId,
+  thambnailUrl,
+}: {
+  deleteId: string;
+  thambnailUrl: string;
+}) {
+  const router = useRouter();
+
+  const [isPending, startTransition] = useTransition();
+
+  function handleDeleteVideo() {
+    console.log(deleteId);
+    console.log(thambnailUrl);
+
+    startTransition(async () => {
+      await deleteVideo(deleteId, thambnailUrl);
+    });
+
+    router.push("/");
+  }
+
   return (
     <Modal>
       <Modal.Trigger openId="delete-video">
@@ -100,8 +128,12 @@ function DeleteVideoModal() {
           <Button className="cursor-pointer text-gray-900 hover:bg-gray-200">
             Cancle
           </Button>
-          <Button className="cursor-pointer bg-rose-500 text-rose-50 hover:bg-rose-400">
-            Delete
+          <Button
+            onClick={handleDeleteVideo}
+            disabled={isPending}
+            className="cursor-pointer bg-rose-500 text-rose-50 hover:bg-rose-400"
+          >
+            {isPending ? <Spinner /> : "Delete"}
           </Button>
         </div>
       </Modal.Content>

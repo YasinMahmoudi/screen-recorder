@@ -16,6 +16,8 @@ export default async function Page({
     <PageWrapper className="space-y-16">
       <VideoDetailsHeader
         id={videoDetails!.video.id}
+        videoId={videoDetails!.video.videoId}
+        thambnail={videoDetails!.video.thumbnailUrl}
         title={videoDetails!.video.title}
         description={videoDetails!.video.description}
         visibility={videoDetails!.video.visibility}
