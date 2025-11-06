@@ -16,7 +16,9 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|signin|_next/static|_next/image|.*\\.*$).*)"],
+  matcher: [
+    "/((?!api|_next/static|signin|_next/image|.*\\.svg$|_next/image|.*\\.jpg$|_next/image|.*\\.png$).*)",
+  ],
 };
 
 const validate = aj
