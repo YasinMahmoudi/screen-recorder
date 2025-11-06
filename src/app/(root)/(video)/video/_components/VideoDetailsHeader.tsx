@@ -96,11 +96,10 @@ function DeleteVideoModal({
   const [isPending, startTransition] = useTransition();
 
   function handleDeleteVideo() {
-    console.log(deleteId);
-    console.log(thambnailUrl);
-
     startTransition(async () => {
       await deleteVideo(deleteId, thambnailUrl);
+
+      toast.success("Video deleted successfully");
     });
 
     router.push("/");
