@@ -11,10 +11,10 @@ declare interface SearchParams {
 }
 
 export default async function Home({ searchParams }: SearchParams) {
-  const { query, filter, page } = await searchParams;
+  const { search, filter, page } = await searchParams;
 
   const { videos, pagination } = await getAllVideos(
-    query,
+    search,
     filter,
     Number(page) || 1,
     8,
