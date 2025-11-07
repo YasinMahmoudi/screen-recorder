@@ -16,7 +16,7 @@ const kablammo = Kablammo({
 export default function NotFoundError() {
   return (
     <div className="flex h-dvh items-center justify-center gap-4 p-0 md:p-4">
-      <div className="not-found-error w-[min(90%,480px)] rounded-sm px-8 py-8 shadow md:px-2 md:py-4">
+      <div className="not-found-error w-[min(90%,480px)] rounded-sm px-8 py-8 shadow md:shadow-none md:px-2 md:py-4">
         <h1 className="font-semibold text-balance text-gray-800 sm:text-xl">
           <span
             className={`${kablammo.className} bg-linear-to-br from-violet-500 to-rose-400 bg-clip-text text-5xl text-transparent`}
