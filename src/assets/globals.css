@@ -38,6 +38,10 @@ body {
 }
 
 @layer components {
+  .not-found-error {
+    /* border-radius: 11% 89% 11% 89% / 84% 15% 85% 16% ; */
+  }
+
   .spinner {
     width: 24px;
     height: 24px;
