@@ -57,10 +57,12 @@ function ModalContent({
   children,
   openId,
   autoClose = false,
+  onClose
 }: {
   children: ReactNode;
   openId: string;
   autoClose?: boolean;
+  onClose?: () => void 
 }) {
   const { openModalId, setOpenModalId } = useModal();
 
@@ -76,7 +78,7 @@ function ModalContent({
         animate={{ scale: 1, transition: { duration: 0.1 } }}
         className="relative min-h-48 w-[min(90%,480px)] rounded-lg bg-white p-6 shadow"
       >
-        <CloseModal />
+        <ModalClose onClose={onClose} />
 
         <div>{children}</div>
       </motion.div>
@@ -85,13 +87,19 @@ function ModalContent({
   );
 }
 
-function CloseModal() {
+function ModalClose({ onClose }: { onClose?: () => void }) {
   const { setOpenModalId } = useModal();
+
+  function handleClose() {
+    setOpenModalId(null);
+
+    onClose?.();
+  }
 
   return (
     <div className="mb-2 p-1 text-right">
       <Button
-        onClick={() => setOpenModalId(null)}
+        onClick={handleClose}
         className="size-6 cursor-pointer bg-rose-50 text-rose-500"
         size="icon"
       >
