@@ -1,7 +1,7 @@
 import PageWrapper from "@/components/PageWrapper";
 import VideoDetailsHeader from "../_components/VideoDetailsHeader";
 import VideoDetailsContent from "../_components/VideoDetailsContent";
-import { getVideo } from "@/lib/actions/video";
+import { getTranscript, getVideo } from "@/lib/actions/video";
 import { notFound } from "next/navigation";
 
 export default async function Page({
@@ -17,6 +17,8 @@ export default async function Page({
     return notFound();
   }
 
+  const transcript = await getTranscript(videoId);
+
   return (
     <PageWrapper className="space-y-16">
       <VideoDetailsHeader
@@ -30,7 +32,11 @@ export default async function Page({
         createdAt={videoDetails!.video.createdAt}
       />
 
-      <VideoDetailsContent videoId={videoDetails!.video.videoId} description={videoDetails!.video.description}  />
+      <VideoDetailsContent
+        videoId={videoDetails!.video.videoId}
+        description={videoDetails!.video.description}
+        transcript={transcript}
+      />
     </PageWrapper>
   );
 }

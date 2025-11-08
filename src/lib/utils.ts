@@ -133,18 +133,16 @@ export const doesTitleMatch = (videos: any, searchQuery: string) =>
     `%${searchQuery.replace(/[-. ]/g, "").toLowerCase()}%`,
   );
 
-declare interface MediaStreams {
+interface MediaStreams {
   displayStream: MediaStream;
   micStream: MediaStream | null;
   hasDisplayAudio: boolean;
 }
 
-declare interface RecordingHandlers {
+interface RecordingHandlers {
   onDataAvailable: (e: BlobEvent) => void;
   onStop: () => void;
 }
-
-
 
 export const DEFAULT_VIDEO_CONFIG = {
   width: { ideal: 1920 },
@@ -263,3 +261,44 @@ export const createRecordingBlob = (
 
 export const calculateRecordingDuration = (startTime: number | null): number =>
   startTime ? Math.round((Date.now() - startTime) / 1000) : 0;
+
+interface TranscriptEntry {
+  time: string;
+  text: string;
+}
+
+export function formateTranscriptString(transcript: string): TranscriptEntry[] {
+  const lines = transcript.replace(/^WEBVTT\s*/, "").split("\n");
+  const result: TranscriptEntry[] = [];
+  let tempText: string[] = [];
+  let startTime: string | null = null;
+
+  for (const line of lines) {
+    const trimmedLine = line.trim();
+    const timeMatch = trimmedLine.match(
+      /(\d{2}:\d{2}:\d{2})\.\d{3}\s-->\s(\d{2}:\d{2}:\d{2})\.\d{3}/,
+    );
+
+    if (timeMatch) {
+      if (tempText.length > 0 && startTime) {
+        result.push({ time: startTime, text: tempText.join(" ") });
+        tempText = [];
+      }
+      startTime = timeMatch[1] ?? null;
+    } else if (trimmedLine) {
+      tempText.push(trimmedLine);
+    }
+
+    if (tempText.length >= 3 && startTime) {
+      result.push({ time: startTime, text: tempText.join(" ") });
+      tempText = [];
+      startTime = null;
+    }
+  }
+
+  if (tempText.length > 0 && startTime) {
+    result.push({ time: startTime, text: tempText.join(" ") });
+  }
+
+  return result;
+}
