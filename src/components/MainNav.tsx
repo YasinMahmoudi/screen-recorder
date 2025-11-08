@@ -1,6 +1,6 @@
 import Logo from "@/components/Logo";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import Link from "next/link";
+import UserAvatar from "@/components/UserAvatar";
 
 export default function MainNav() {
   return (
@@ -17,10 +17,7 @@ export default function MainNav() {
         </Link>
       </div>
 
-      <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
+      <UserAvatar />
     </header>
   );
 }
