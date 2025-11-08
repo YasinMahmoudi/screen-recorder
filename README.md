@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⏺️ Capterra - screen recording app
 
-## Getting Started
+This app helps you to record , upload and also share your videos across the platform with others . 😍
 
-First, run the development server:
+
+
+
+## 📷 Screenshots
+
+<img width="1918" height="906" alt="Screenshot 2025-11-08 230141" src="https://github.com/user-attachments/assets/3a964b8c-ab1e-4e93-8dd9-84277f621e96" />
+
+
+## 🚀 Demo
+
+
+[Click here to see demo](https://capterra.vercel.app)
+
+
+## ⚙️ Tech Stack
+
+<div align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="40" alt="nextjs logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="40" alt="postgresql logo"  />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" height="40" alt="tailwindcss logo"  />
+
+</div>
+
+
+## ✨ Features
+
+👉 **Screen Recording**: Capture your screen directly within the app . 
+
+👉 **Authentication**: Secure user auth with Better-Auth & Google provider.  
+
+👉 **Arcjet Integration**: Implement bot protection, rate limiting, email validation for enhancing the app security.
+
+👉 **Modern Tech Stack**: Built with Next.js 16 for a fast, production-ready web app. 
+ 
+👉 **Share Videos**: Share videos via unique links for easy access and distribution.  
+ 
+👉 **Database Integration**: Utilize Neon for manage data in database.  
+
+👉 **Type-Safe Queries**: Using Drizzle ORM’s type-safe queries for secure and efficient database interactions.  
+ 
+👉 ** Respovive Design **: Fully responsive design for all sceens and devices .  
+
+
+
+
+
+##  🛠️ Installation 
+
+Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/YasinMahmoudi/screen-recorder.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the project directory
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+  cd screen-recorder
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install the project dependencies using pnpm : 
 
-## Learn More
+```bash
+  pnpm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+Set Up Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a new file named `.env` in the root of your project and add the following content \
+Or use `.env.example` provided in the root directory :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    # BASE URL
+    NEXT_PUBLIC_BASE_URL=http://localhost:3000
+    
+    
+    #BETTER AUTH
+    BETTER_AUTH_SECRET=
+    BETTER_AUTH_URL=http://localhost:3000 
+    
+    
+    #GOOGLE
+    GOOGLE_CLIENT_ID=
+    GOOGLE_CLIENT_SECRET=
+    
+    # Recommended for most uses
+    DATABASE_URL=
+    
+    # For uses requiring a connection without pgbouncer
+    DATABASE_URL_UNPOOLED=
+    
+    # Parameters for constructing your own connection string
+    PGHOST=
+    PGHOST_UNPOOLED=
+    PGUSER=
+    PGDATABASE=
+    PGPASSWORD=
+    
+    # Parameters for Vercel Postgres Templates
+    POSTGRES_URL=postgresql:
+    POSTGRES_URL_NON_POOLING=
+    POSTGRES_USER=
+    POSTGRES_HOST=
+    POSTGRES_PASSWORD=
+    POSTGRES_DATABASE=
+    POSTGRES_URL_NO_SSL=postgresql:
+    POSTGRES_PRISMA_URL=postgresql:
+    
+    # Neon Auth environment variables for Next.js
+    NEXT_PUBLIC_STACK_PROJECT_ID=
+    NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=
+    STACK_SECRET_SERVER_KEY=
+    
+    #BUNNY
+    BUNNY_STORAGE_ACCESS_KEY=
+    BUNNY_LIBRARY_ID=
+    BUNNY_STREAM_ACCESS_KEY=
+    
+    #ARCJET
+    ARCJET_KEY=
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Start the server
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+  pnpm dev
+```
+
