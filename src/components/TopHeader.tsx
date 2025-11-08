@@ -22,7 +22,7 @@ export default function TopHeader({
       <figure className="flex items-center gap-2.5">
         {imageSrc && (
           <Image
-            src="/images/avatar.jpg"
+            src={imageSrc}
             alt="Avatar"
             width={60}
             height={60}
