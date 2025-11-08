@@ -100,9 +100,9 @@ function DeleteVideoModal({
       await deleteVideo(deleteId, thambnailUrl);
 
       toast.success("Video deleted successfully");
-    });
 
-    router.push("/");
+      router.push("/");
+    });
   }
 
   return (
@@ -125,9 +125,12 @@ function DeleteVideoModal({
         </p>
 
         <div className="mt-4 flex justify-end gap-4">
-          <Button className="cursor-pointer text-gray-900 hover:bg-gray-200">
-            Cancle
-          </Button>
+          <Modal.Cancel>
+            <Button className="cursor-pointer text-gray-900 hover:bg-gray-200">
+              Cancle
+            </Button>
+          </Modal.Cancel>
+
           <Button
             onClick={handleDeleteVideo}
             disabled={isPending}
