@@ -1,29 +1,34 @@
 import Header from "@/components/header";
 import PageWrapper from "@/components/PageWrapper";
 import TopHeader from "@/components/TopHeader";
-import Divider from "@/components/ui/Divider";
-import Pagination from "@/components/ui/Pagination";
 import VideoList from "@/components/VideoList";
-import React from "react";
+import { getAllUserVideos } from "@/lib/actions/video";
+import { notFound } from "next/navigation";
 
-export default function Page() {
+interface ProfilePageProps {
+  params: Promise<Record<string, string>>;
+  searchParams: Promise<Record<string, string | undefined>>;
+}
+
+export default async function Page({ params, searchParams }: ProfilePageProps) {
+  const { id } = await params;
+  const { search, filter } = await searchParams;
+
+  const { user, videos } = await getAllUserVideos(id, search, filter);
+
+  if (!user) return notFound();
+
   return (
     <PageWrapper>
       <TopHeader
-        subTitle="yasin@dev.io"
-        title="Yasin Mahmoudi"
-        imageSrc="/images/avatar.jpg"
+        subTitle={user.email}
+        title={user.name}
+        imageSrc={user.image ?? ""}
       />
 
       <Header />
 
-      <VideoList />
-
-      <Divider className="my-8" />
-
-      <div className="flex justify-center">
-        <Pagination />
-      </div>
+      <VideoList videos={videos} />
     </PageWrapper>
   );
 }
