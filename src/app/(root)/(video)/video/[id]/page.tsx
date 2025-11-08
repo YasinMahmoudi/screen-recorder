@@ -30,7 +30,7 @@ export default async function Page({
         createdAt={videoDetails!.video.createdAt}
       />
 
-      <VideoDetailsContent videoId={videoDetails!.video.videoId} />
+      <VideoDetailsContent videoId={videoDetails!.video.videoId} description={videoDetails!.video.description}  />
     </PageWrapper>
   );
 }
