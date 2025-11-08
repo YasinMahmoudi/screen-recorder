@@ -57,12 +57,12 @@ function ModalContent({
   children,
   openId,
   autoClose = false,
-  onClose
+  onClose,
 }: {
   children: ReactNode;
   openId: string;
   autoClose?: boolean;
-  onClose?: () => void 
+  onClose?: () => void;
 }) {
   const { openModalId, setOpenModalId } = useModal();
 
@@ -109,6 +109,19 @@ function ModalClose({ onClose }: { onClose?: () => void }) {
   );
 }
 
+function ModalCancel({ children }: { children: ReactNode }) {
+  const { setOpenModalId } = useModal();
+
+  if (isValidElement(children))
+    return cloneElement(children as JSX.Element, {
+      onClick: () => setOpenModalId(null),
+    });
+
+  return cloneElement(<div>{children}</div>, {
+    onClick: () => setOpenModalId(null),
+  });
+}
+
 function useModal() {
   const context = useContext<ModalContextProps>(ModalContext);
 
@@ -121,3 +134,4 @@ function useModal() {
 
 Modal.Trigger = ModalTrigger;
 Modal.Content = ModalContent;
+Modal.Cancel = ModalCancel;
