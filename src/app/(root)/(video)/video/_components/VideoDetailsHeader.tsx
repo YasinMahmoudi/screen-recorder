@@ -72,7 +72,7 @@ export default function VideoDetailsHeader({
       </div>
 
       <div className="mt-4 flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-stretch md:mt-0 md:gap-4">
-        <CopyLinkButton id={id} />
+        <CopyLinkButton id={videoId} />
 
         <div className="flex items-center gap-2 md:gap-4">
           <DeleteVideoModal deleteId={videoId} thambnailUrl={thambnail!} />
