@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import ArrowDownIcon from "../assets/icons/arrow-down.svg";
 import EyeIcon from "../assets/icons/eye.svg";
 
 import CopyLinkButton from "@/components/CopyLinkButton";
+import { differenceDate } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
@@ -33,6 +33,8 @@ export default function VideoCard({
 }: {
   video: VideoCardProps;
 }) {
+  const uploadDatePassed = differenceDate(video.createdAt);
+
   return (
     <div className="aspect-video w-full rounded-2xl border border-gray-300 pb-6">
       <div className="relative h-40">
@@ -48,7 +50,7 @@ export default function VideoCard({
         {video.duration && (
           <span className="absolute right-2.5 bottom-4 rounded-full bg-gray-900 px-2.5 py-1 text-xs font-medium tracking-tighter text-gray-50">
             {" "}
-            {video.duration} min{" "}
+            {Math.ceil(video.duration / 60)} min{" "}
           </span>
         )}
 
@@ -75,19 +77,8 @@ export default function VideoCard({
                 <span className="text-xs font-medium"> {user.name}</span>
               )}
               <div className="h-1 w-1 rounded-full bg-gray-500"></div>
-              <span className="text-xs text-gray-400"> 2mo</span>
+              <span className="text-xs text-gray-400"> {uploadDatePassed}</span>
             </div>
-
-            <p className="flex gap-0.5">
-              <span className="text-xs text-gray-500"> Not shared</span>
-              <Image
-                src={ArrowDownIcon}
-                alt="Arrow Down"
-                width={15}
-                height={15}
-                className="h-[15px] w-[15px]"
-              />
-            </p>
           </div>
         </div>
 

@@ -30,7 +30,6 @@ type VideoDetailsHeaderProps = {
 };
 
 export default function VideoDetailsHeader({
-  id,
   title,
   visibility,
   user,
