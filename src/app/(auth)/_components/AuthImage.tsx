@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AuthImage() {
   return (
-    <figure className="relative hidden md:block">
+    <figure className="relative hidden xmd:block">
       <Image
         src="/images/auth-image.svg"
         alt="Auth Image"
