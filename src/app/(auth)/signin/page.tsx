@@ -11,7 +11,7 @@ export default function Page() {
   };
 
   return (
-    <div className="grid h-[calc(100dvh-64px)] grid-cols-1 md:grid-cols-2">
+    <div className="grid h-[calc(100dvh-64px)] grid-cols-1 xmd:grid-cols-2">
       <AuthImage />
 
       <SignInForm onSignIn={handleSignIn} />
